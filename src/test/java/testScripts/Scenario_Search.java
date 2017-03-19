@@ -15,7 +15,7 @@ public class Scenario_Search extends Base{
 	
 	
 //	invalid Search
-	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=true)
+	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=true,groups = {"UAT","QA","DEV"})
 	public void invalidsearch(Map<String,String> SearchMap) throws Exception{
 		String tcid = SearchMap.get("TC_ID");
 		String order= SearchMap.get("Order");
@@ -23,7 +23,7 @@ public class Scenario_Search extends Base{
 		String exp_result= SearchMap.get("exp_result");
 		
 		 startTest= eReports.startTest(tcid + "_" + order);
-	
+		 startTest.assignCategory(browser_type);
 		Pf_Homepage pf_Homepage = new Pf_Homepage(driver);
 		cv_contains(driver.getTitle(), "Buy Books Online", "Validate Home Page Title");
 				
@@ -43,7 +43,7 @@ public class Scenario_Search extends Base{
 	
 	
 //	Valid Search
-	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=true)
+	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=true,groups = {"STAGE"})
 	public void validsearch(Map<String,String> SearchMap) throws Exception{
 		String tcid = SearchMap.get("TC_ID");
 		String order= SearchMap.get("Order");
@@ -51,7 +51,7 @@ public class Scenario_Search extends Base{
 		String exp_result= SearchMap.get("exp_result");
 		
 		 startTest= eReports.startTest(tcid + "_" + order);
-	
+		 startTest.assignCategory(browser_type);
 		Pf_Homepage pf_Homepage = new Pf_Homepage(driver);
 		cv_contains(driver.getTitle(), "Buy Books Online", "Validate Home Page Title");
 				

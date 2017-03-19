@@ -19,7 +19,7 @@ import pageFactory.Pf_Signin;
 public class Scenario_Login extends Base{
 	Logger login_Log = Logger.getLogger(Scenario_Login.class);
 	
-	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=true)
+	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=true,groups = {"UAT","QA","STAGE"})
 	public void ValidLogin(Map<String,String> LoginMap) throws Exception{
 		String exp = LoginMap.get("Exp_msg");
 		String uname=  LoginMap.get("Uname");
@@ -27,7 +27,7 @@ public class Scenario_Login extends Base{
 		String tcid = LoginMap.get("TC_ID");
 		String order = LoginMap.get("Order");
 		startTest = eReports.startTest(tcid + "_" +order );
-		startTest.assignCategory("firefox");
+		startTest.assignCategory(browser_type);
 		login_Log.info("Starting test:" + tcid + " and order: " + order);
 		startTest.log(LogStatus.PASS, "Starting test","Starting test:" + tcid + " and order: " + order);
 //		code change
@@ -65,7 +65,7 @@ public class Scenario_Login extends Base{
 	}
 	 
 
-	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=false)
+	@Test(dataProvider = "commondp",dataProviderClass=dataProvider.Dp_login.class,enabled=false,groups = {"DEV","STAGE"})
 	public void InvalidLogin(Map<String,String> LoginMap){
 		
 		String exp = LoginMap.get("Exp_msg");

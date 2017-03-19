@@ -20,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -35,18 +36,18 @@ public class Base {
 	public WebDriver driver;
 	public static ExtentReports eReports;
 	public ExtentTest startTest;
+	public String browser_type;
 	
-	
-	@BeforeSuite
+	@BeforeSuite(groups = {"UAT","QA","STAGE","DEV"})
 	public void initReports(){
 		eReports = new ExtentReports("E:\\FebReports\\proj_" + getDatetimestamp() + ".html",false);
 		
 	}
 	
 	@Parameters({"browser"})
-	@BeforeMethod
+	@BeforeMethod(groups = {"UAT","QA","STAGE","DEV"})
 	public void launchApp(String btype) throws Exception{
-		
+		browser_type=btype;
 		if(btype.equalsIgnoreCase("firefox")){
 			driver = new FirefoxDriver();
 		}else if(btype.equalsIgnoreCase("chrome")){
@@ -62,8 +63,18 @@ public class Base {
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	}
 	
-	@AfterMethod
-	public void tearDown(){		
+	@AfterMethod(groups = {"UAT","QA","STAGE","DEV"})
+	public void tearDown(ITestResult result) throws Exception{		
+		
+		if(result.getStatus()==ITestResult.SUCCESS){
+			startTest.log(LogStatus.PASS, "Test Status","Passed the Test"  + startTest.addScreenCapture(getScreen()));
+		}else if(result.getStatus()==ITestResult.FAILURE){
+			startTest.log(LogStatus.FAIL, "Test Status","Failed the Test"  + result.getThrowable().toString() + startTest.addScreenCapture(getScreen()));
+		}else if(result.getStatus()==ITestResult.SKIP){
+			startTest.log(LogStatus.SKIP, "Test Status","Passed the Test"  + result.getThrowable().toString() + startTest.addScreenCapture(getScreen()));
+		}		
+		
+			
 		eReports.endTest(startTest);
 		eReports.flush();
 		driver.quit();

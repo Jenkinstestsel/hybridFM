@@ -35,7 +35,10 @@ public class Dp_login {
 		case "validsearch":
 			commondp_Logic = commondp_Logic("Search", "validsearch");
 			break;	
-		
+			
+		case "addtocart":
+			commondp_Logic = commondp_Logic("Cart", "Addbook");
+			break;
 //		case default:
 		}
 		

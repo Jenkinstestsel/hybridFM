@@ -25,6 +25,9 @@ public class Pf_Homepage extends Pf_Keywords{
 	@FindBy(id="find")
 	public WebElement lbl_searchcount;
 	
+	@FindBy(xpath="//div[@class='bookbox'][1]//img")
+	public WebElement img_book;
+	
 	
 	public Pf_Homepage(WebDriver driver){
 		
